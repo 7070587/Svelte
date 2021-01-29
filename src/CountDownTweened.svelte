@@ -52,10 +52,10 @@
         font-size: 2em;
     }
 
-    div {
+    /* div {
         color: violet;
         font-weight: bold;
-    }
+    } */
 
     ul {
         padding: 0;
