@@ -11,8 +11,12 @@
     import Tweened from './Tweened.svelte';
     import Spring from './Spring.svelte';
     import CountDownTweened from './CountDownTweened.svelte';
-    // import Transition from './Transition.svelte';
-    import Crossfade from './Crossfade.svelte';
+    import Transition from './Transition.svelte';
+    import CrossfadeAnimate from './CrossfadeAnimate.svelte';
+    import Class from './Class.svelte';
+    import Card from './Card.svelte';
+    import Element from './Element.svelte';
+    import Options from './Options.svelte';
 
     import { countdownTimer } from './CountDown';
 
@@ -32,12 +36,28 @@
     // console.log('counrdown => App', countdown);
 
     // countdown.subscribe((item: number) => console.log('subscribe => App', item));
+
+    let title: string = '';
+    let imageUrl: string = 'https://images.pexels.com/photos/633198/pexels-photo-633198.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260';
 </script>
 
 <!-- <Spring /> -->
 
 <main>
-    <Crossfade />
+    <Options />
+
+    <!-- <Element /> -->
+
+    <!-- <Card {imageUrl}>
+        <h2 slot="card-head" let:title>Title: Card {title}</h2>
+        <img slot="card-image" let:imageUrl src={imageUrl} alt="" />
+        <div slot="card-body"><button>Body: Card</button></div>
+        <div slot="card-footer"><a href="/">Footer: Card</a></div>
+    </Card> -->
+
+    <!-- <Class /> -->
+
+    <!-- <CrossfadeAnimate /> -->
 
     <!-- <Transition /> -->
 
@@ -83,4 +103,8 @@
         color: tomato;
         font-weight: bold;
     }
+
+    /* img {
+        max-width: 100%;
+    } */
 </style>
