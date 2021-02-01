@@ -3,7 +3,10 @@
         id: number;
         name: string;
     }
+
+    import { cubicOut } from 'svelte/easing';
     import { crossfade, fade } from 'svelte/transition';
+    import { flip } from 'svelte/animate';
 
     const [send, receive] = crossfade({
         duration: (d) => Math.sqrt(d * 250),
@@ -34,12 +37,26 @@
 <main>
     <h1>All</h1>
     {#each tags.filter((tag) => !selected.includes(tag.id)) as tag (tag.id)}
-        <button in:receive={{ key: tag.id }} out:send={{ key: tag.id }} on:click={() => handleClick(tag)}> {tag.name} </button>
+        <button
+            in:receive={{ key: tag.id }}
+            out:send={{ key: tag.id }}
+            on:click={() => handleClick(tag)}
+            animate:flip={{ duration: 250, easing: cubicOut }}
+        >
+            {tag.name}
+        </button>
     {/each}
 
     <h1>Selected</h1>
     {#each tags.filter((tag) => selected.includes(tag.id)) as tag (tag.id)}
-        <button in:receive={{ key: tag.id }} out:send={{ key: tag.id }} on:click={() => handleClick(tag)}> {tag.name} </button>
+        <button
+            in:receive={{ key: tag.id }}
+            out:send={{ key: tag.id }}
+            on:click={() => handleClick(tag)}
+            animate:flip={{ duration: 250, easing: cubicOut }}
+        >
+            {tag.name}
+        </button>
     {/each}
 </main>
 
