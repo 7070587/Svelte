@@ -40,7 +40,6 @@ export default {
     },
     plugins: [
         svelte({
-            customElement: true,
             preprocess: sveltePreprocess(),
             compilerOptions: {
                 // enable run-time checks when not in production
