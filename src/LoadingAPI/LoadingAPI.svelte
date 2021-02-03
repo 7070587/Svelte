@@ -1,24 +1,37 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import fetchAPI from '@/LoadingAPI/loading_api';
+    // import fetchAPI from '@/LoadingAPI/loading_api';
+    import { selected, setSelected, repos } from '@/stores/loading_api';
 
-    const labels: string[] = ['React', 'vue', 'Svelte'];
+    const labels: string[] = ['React', 'Vue', 'Svelte'];
 
-    let selected: string = labels[0];
+    // let selected: string = labels[0];
 
-    $: [res, controller] = fetchAPI(selected.toLowerCase());
+    // $: [res, controller] = fetchAPI(selected.toLowerCase());
 
     function handleClick(selectedStr: string) {
-        selected = selectedStr;
+        $selected = selectedStr;
     }
 </script>
 
 <main>
     {#each labels as label}
-        <button class:active={selected === label} on:click={() => handleClick(label)}> {label} </button>
+        <button class:active={$selected === label} on:click={() => handleClick(label)}> {label} </button>
     {/each}
 
-    {#await res}
+    {#if $repos.status === 'loading'}
+        <h3>Loading...</h3>
+    {:else if $repos.status === 'loaded'}
+        {#each $repos.items as item (item.id)}
+            <h3>{item.name}</h3>
+            <div>{item.description}</div>
+            <a href={item.html_url}>Repo Link</a>
+        {/each}
+    {:else if $repos.status === 'error'}
+        <h3>{$repos.error}</h3>
+    {/if}
+
+    <!-- {#await res}
         <h3>Loading...</h3>
     {:then value}
         {#each value.items as item (item.id)}
@@ -28,7 +41,7 @@
         {/each}
     {:catch error}
         <h3>{error}</h3>
-    {/await}
+    {/await} -->
 </main>
 
 <style>
