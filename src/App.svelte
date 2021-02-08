@@ -1,12 +1,17 @@
 <script lang="ts">
+    // Loading API
     import LoadingAPI from './LoadingAPI/LoadingAPI.svelte';
+
+    // Custom modal
     import Modal from './Modal/Modal.svelte';
     import Toggle from './Modal/Toggle.svelte';
-
     import { modal } from '@/stores/modal';
+
+    // Custom slider
+    import Slider from './Slider/Slider.svelte';
 </script>
 
-<Toggle />
+<!-- <Toggle />
 <button>1</button>
 <button>11</button>
 <button>111</button>
@@ -16,7 +21,7 @@
     <Modal title={$modal.title}>
         <svelte:component this={$modal.component} {...$modal.params} />
     </Modal>
-{/if}
+{/if} -->
 
 <!-- <LoadingAPI /> -->
 <style>
