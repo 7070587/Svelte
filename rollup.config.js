@@ -44,7 +44,6 @@ export default {
                 sourceMap: !production,
                 // etting default languages
                 defaults: {
-                    markup: 'pug',
                     script: 'typescript',
                     style: 'scss',
                 },
