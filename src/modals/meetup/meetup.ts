@@ -13,13 +13,13 @@ export interface IMeetupItem {
 export interface ITextInput {
     id: string;
     label: string;
-    type: EInputType;
+    type?: EInputType; // defualt text
     rows?: number;
     value: string;
 }
 
 export interface IButton {
-    type: EButtonType;
+    type?: EButtonType; // defualt button
     label: string;
     href?: string;
     mode?: string;
