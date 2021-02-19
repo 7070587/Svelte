@@ -1,4 +1,4 @@
-import type { EFormType } from './../../enums/meetup';
+import type { EInputType, EButtonType } from './../../enums/meetup';
 
 export interface IMeetupItem {
     id: string;
@@ -13,7 +13,14 @@ export interface IMeetupItem {
 export interface ITextInput {
     id: string;
     label: string;
-    type: EFormType;
+    type: EInputType;
     rows?: number;
     value: string;
+}
+
+export interface IButton {
+    type: EButtonType;
+    label: string;
+    href?: string;
+    mode?: string;
 }
