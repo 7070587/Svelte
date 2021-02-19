@@ -1,6 +1,6 @@
 <script>
     import type { IMeetup } from './../modals';
-    export let meetup: IMeetup.IMeetupItem = undefined;
+    export let meetup: IMeetup.IMeetupItem;
 </script>
 
 <article>
