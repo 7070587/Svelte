@@ -1,9 +1,10 @@
 <script>
     import type { IMeetup } from './modals';
-    import { EFormType } from './enums/meetup';
+    import { EInputType, EButtonType } from './enums/meetup';
 
     import Header from './UI/Header.svelte';
     import TextInput from './UI/TextInput.svelte';
+    import Button from './UI/Button.svelte';
 
     import MeetupGrid from './Meetups/MeetupGrid.svelte';
 
@@ -39,17 +40,22 @@
     };
     let meetupEmpty: IMeetup.IMeetupItem = JSON.parse(JSON.stringify(meetup));
 
-    const titleInput: IMeetup.ITextInput = { id: 'title', label: 'Title', type: EFormType.text, value: meetup.title };
-    const subTitleInput: IMeetup.ITextInput = { id: 'subTitle', label: 'Sub Title', type: EFormType.text, value: meetup.subTitle };
-    const addressInput: IMeetup.ITextInput = { id: 'address', label: 'Address', type: EFormType.text, value: meetup.address };
-    const imageUrlInput: IMeetup.ITextInput = { id: 'imageUrl', label: 'Image Url', type: EFormType.text, value: meetup.imageUrl };
-    const contactEmailInput: IMeetup.ITextInput = { id: 'contactEmail', label: 'Contact Email', type: EFormType.email, value: meetup.contactEmail };
+    const titleInput: IMeetup.ITextInput = { id: 'title', label: 'Title', type: EInputType.text, value: meetup.title };
+    const subTitleInput: IMeetup.ITextInput = { id: 'subTitle', label: 'Sub Title', type: EInputType.text, value: meetup.subTitle };
+    const addressInput: IMeetup.ITextInput = { id: 'address', label: 'Address', type: EInputType.text, value: meetup.address };
+    const imageUrlInput: IMeetup.ITextInput = { id: 'imageUrl', label: 'Image Url', type: EInputType.text, value: meetup.imageUrl };
+    const contactEmailInput: IMeetup.ITextInput = { id: 'contactEmail', label: 'Contact Email', type: EInputType.email, value: meetup.contactEmail };
     const descriptionInput: IMeetup.ITextInput = {
         id: 'description',
         label: 'Description',
-        type: EFormType.textarea,
+        type: EInputType.textarea,
         rows: 3,
         value: meetup.description,
+    };
+
+    let buttonSave: IMeetup.IButton = {
+        label: 'Save',
+        type: EButtonType.submit,
     };
 
     function saveData(params): void {
@@ -134,7 +140,9 @@
         <TextInput textInput={contactEmailInput} on:input={handleContactEmail} />
         <TextInput textInput={descriptionInput} on:input={handleDescription} />
 
-        <button>Save</button>
+        <div class="button">
+            <Button button={buttonSave} />
+        </div>
     </form>
 
     <MeetupGrid {meetups} />
@@ -150,8 +158,9 @@
         max-width: 90%;
         margin: auto;
 
-        button {
-            margin-bottom: 1rem;
+        .button {
+            margin-bottom: 0.5rem;
+            margin-top: 1rem;
         }
     }
 </style>
