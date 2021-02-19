@@ -2,13 +2,19 @@
     import type { IMeetup } from './../modals';
     import { EInputType } from './../enums/meetup';
 
-    export let textInput: IMeetup.ITextInput;
+    export let textInput: IMeetup.ITextInput = {
+        id: '',
+        label: '',
+        type: EInputType.text,
+        rows: 3,
+        value: '',
+    };
 </script>
 
 <div class="form-control">
     <label for={textInput.id}>{textInput.label}</label>
     {#if textInput.type === EInputType.textarea}
-        <textarea rows={textInput.rows ? textInput.rows : 3} id={textInput.id} value={textInput.value} on:input />
+        <textarea rows={textInput.rows} id={textInput.id} value={textInput.value} on:input />
     {:else}
         <input type={textInput.type} id={textInput.id} value={textInput.value} on:input />
     {/if}

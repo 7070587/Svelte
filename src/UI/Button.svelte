@@ -1,7 +1,13 @@
 <script>
     import type { IMeetup } from './../modals';
+    import { EButtonType } from './../enums/meetup';
 
-    export let button: IMeetup.IButton;
+    export let button: IMeetup.IButton = {
+        type: EButtonType.button,
+        label: '',
+        href: '',
+        mode: '',
+    };
 </script>
 
 {#if button.href}
