@@ -40,10 +40,10 @@
     };
     let meetupEmpty: IMeetup.IMeetupItem = JSON.parse(JSON.stringify(meetup));
 
-    const titleInput: IMeetup.ITextInput = { id: 'title', label: 'Title', type: EInputType.text, value: meetup.title };
-    const subTitleInput: IMeetup.ITextInput = { id: 'subTitle', label: 'Sub Title', type: EInputType.text, value: meetup.subTitle };
-    const addressInput: IMeetup.ITextInput = { id: 'address', label: 'Address', type: EInputType.text, value: meetup.address };
-    const imageUrlInput: IMeetup.ITextInput = { id: 'imageUrl', label: 'Image Url', type: EInputType.text, value: meetup.imageUrl };
+    const titleInput: IMeetup.ITextInput = { id: 'title', label: 'Title', value: meetup.title };
+    const subTitleInput: IMeetup.ITextInput = { id: 'subTitle', label: 'Sub Title', value: meetup.subTitle };
+    const addressInput: IMeetup.ITextInput = { id: 'address', label: 'Address', value: meetup.address };
+    const imageUrlInput: IMeetup.ITextInput = { id: 'imageUrl', label: 'Image Url', value: meetup.imageUrl };
     const contactEmailInput: IMeetup.ITextInput = { id: 'contactEmail', label: 'Contact Email', type: EInputType.email, value: meetup.contactEmail };
     const descriptionInput: IMeetup.ITextInput = {
         id: 'description',

@@ -8,18 +8,15 @@
 
     let buttonALink: IMeetup.IButton = {
         label: 'Contact',
-        type: EButtonType.button,
         href: `mailto:${meetup.contactEmail}`,
     };
 
     let buttonShowDetail: IMeetup.IButton = {
         label: 'Show Detail',
-        type: EButtonType.button,
     };
 
     let buttonFavorite: IMeetup.IButton = {
         label: 'Favorite',
-        type: EButtonType.button,
         mode: 'outline',
     };
 </script>
@@ -40,10 +37,6 @@
     </div>
 
     <footer>
-        <!-- <a href="mailto:{meetup.contactEmail}">Contact</a> -->
-        <!-- <button>Show Detail</button>
-        <button>Favorite</button> -->
-
         <Button button={buttonALink} />
 
         <Button button={buttonFavorite} />
