@@ -51,7 +51,7 @@
     <footer>
         <Button button={buttonALink}>Contact</Button>
 
-        <Button button={meetup.isFavorite ? buttonUnfavorite : buttonFavorite} on:click={clickFavorite}>
+        <Button button={!meetup.isFavorite ? buttonUnfavorite : buttonFavorite} on:click={clickFavorite}>
             {meetup.isFavorite ? 'Favorite' : 'Unfavorite'}
         </Button>
         <Button>Show Detail</Button>
