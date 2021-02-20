@@ -8,6 +8,12 @@ module.exports = {
             script: 'typescript',
             style: 'scss',
         },
+        scss: {
+            // We can use a path relative to the root because
+            // svelte-preprocess automatically adds it to `includePaths`
+            // if none is defined.
+            prependData: `@import 'src/styles/variables.scss';`,
+        },
         dev: !production,
         // we'll extract any component CSS out into
         // a separate file — better for performance
