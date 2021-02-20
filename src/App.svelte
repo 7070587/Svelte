@@ -41,6 +41,7 @@
         imageUrl: '',
         address: '',
         contactEmail: '',
+        isFavorite: false,
     };
     let meetupEmpty: IMeetup.IMeetupItem = JSON.parse(JSON.stringify(meetup));
 
@@ -99,6 +100,12 @@
 
     function toggleFavorite(e) {
         const id: string = e.detail;
+        const updatedMeetup: IMeetup.IMeetupItem = { ...meetups.find((x) => x.id === id) };
+        updatedMeetup.isFavorite = !updatedMeetup.isFavorite;
+        const meetupIndex: number = meetups.findIndex((x) => x.id === id);
+        const updatedMeetups: IMeetup.IMeetupItem[] = [...meetups];
+        updatedMeetups[meetupIndex] = updatedMeetup;
+        meetups = updatedMeetups;
     }
 </script>
 
@@ -118,7 +125,7 @@
         </div>
     </form>
 
-    <MeetupGrid {meetups} />
+    <MeetupGrid {meetups} on:toggle-favorite={toggleFavorite} />
 </main>
 
 <style>

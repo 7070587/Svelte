@@ -8,6 +8,7 @@ export interface IMeetupItem {
     imageUrl: string;
     address: string;
     contactEmail: string;
+    isFavorite?: boolean;
 }
 
 export interface ITextInput {

@@ -1,10 +1,13 @@
 <script>
+    import { createEventDispatcher } from 'svelte';
+
     import type { IMeetup } from './../modals';
-    import { EButtonType } from './../enums/meetup';
 
     import Button from './../UI/Button.svelte';
 
     export let meetup: IMeetup.IMeetupItem;
+
+    const dispatch: (name: string, detail?: any) => void = createEventDispatcher();
 
     let buttonALink: IMeetup.IButton = {
         label: 'Contact',
@@ -19,6 +22,15 @@
         label: 'Favorite',
         mode: 'outline',
     };
+
+    let buttonUnfavorite: IMeetup.IButton = {
+        label: 'Unfavorite',
+        mode: 'outline',
+    };
+
+    function clickFavorite() {
+        dispatch('toggle-favorite', meetup.id);
+    }
 </script>
 
 <article>
@@ -39,7 +51,7 @@
     <footer>
         <Button button={buttonALink} />
 
-        <Button button={buttonFavorite} />
+        <Button button={meetup.isFavorite ? buttonUnfavorite : buttonFavorite} on:click={clickFavorite} />
         <Button button={buttonShowDetail} />
     </footer>
 </article>
