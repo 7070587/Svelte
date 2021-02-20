@@ -33,7 +33,6 @@
     };
 
     let buttonSave: IMeetup.IButton = {
-        label: 'Save',
         type: EButtonType.submit,
     };
 
@@ -75,7 +74,7 @@
     <TextInput textInput={descriptionInput} on:input={handleDescription} />
 
     <div class="button">
-        <Button button={buttonSave} />
+        <Button button={buttonSave}>Save</Button>
     </div>
 </form>
 

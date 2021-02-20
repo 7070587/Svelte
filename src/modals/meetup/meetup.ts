@@ -21,7 +21,6 @@ export interface ITextInput {
 
 export interface IButton {
     type?: EButtonType; // defualt button
-    label: string;
     href?: string;
     mode?: string;
     color?: string;

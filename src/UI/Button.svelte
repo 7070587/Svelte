@@ -4,7 +4,6 @@
 
     export let button: IMeetup.IButton = {
         type: EButtonType.button,
-        label: '',
         href: '',
         mode: '',
         color: '',
@@ -12,9 +11,9 @@
 </script>
 
 {#if button.href}
-    <a href={button.href}>{button.label}</a>
+    <a href={button.href}><slot /></a>
 {:else}
-    <button type={button.type} class="{button.mode} {button.color}" on:click> {button.label} </button>
+    <button type={button.type} class="{button.mode} {button.color}" on:click> <slot /> </button>
 {/if}
 
 <style>

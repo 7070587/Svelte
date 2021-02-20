@@ -11,22 +11,15 @@
     const dispatch: (name: string, detail?: any) => void = createEventDispatcher();
 
     let buttonALink: IMeetup.IButton = {
-        label: 'Contact',
         href: `mailto:${meetup.contactEmail}`,
     };
 
-    let buttonShowDetail: IMeetup.IButton = {
-        label: 'Show Detail',
-    };
-
     let buttonFavorite: IMeetup.IButton = {
-        label: 'Favorite',
         mode: 'outline',
         color: 'success',
     };
 
     let buttonUnfavorite: IMeetup.IButton = {
-        label: 'Unfavorite',
         mode: 'outline',
     };
 
@@ -56,10 +49,12 @@
     </div>
 
     <footer>
-        <Button button={buttonALink} />
+        <Button button={buttonALink}>Contact</Button>
 
-        <Button button={meetup.isFavorite ? buttonUnfavorite : buttonFavorite} on:click={clickFavorite} />
-        <Button button={buttonShowDetail} />
+        <Button button={meetup.isFavorite ? buttonUnfavorite : buttonFavorite} on:click={clickFavorite}>
+            {meetup.isFavorite ? 'Favorite' : 'Unfavorite'}
+        </Button>
+        <Button>Show Detail</Button>
     </footer>
 </article>
 

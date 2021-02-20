@@ -35,10 +35,6 @@
 
     let meetupStatus: EMeetupStatus;
 
-    let buttonNewMeetup: IMeetup.IButton = {
-        label: 'New Meetup',
-    };
-
     function saveData(e): void {
         const newMeetup: IMeetup.IMeetupItem = JSON.parse(JSON.stringify(e.detail));
         newMeetup.id = ServiceGenerate.randomId();
@@ -69,7 +65,7 @@
 
 <main>
     <div class="meetup-controls">
-        <Button button={buttonNewMeetup} on:click={clickNewMeetup} />
+        <Button on:click={clickNewMeetup}>New Meetup</Button>
     </div>
 
     {#if meetupStatus === EMeetupStatus.create}
