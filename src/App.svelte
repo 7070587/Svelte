@@ -19,7 +19,7 @@
             imageUrl: 'https://cdn.pixabay.com/photo/2015/03/26/09/48/chicago-690364_960_720.jpg',
             address: 'svelte_address',
             contactEmail: 'svelte@svelte.svelte',
-            isFavorite: false,
+            isFavorite: true,
         },
         {
             id: ServiceGenerate.randomId(),

@@ -12,7 +12,7 @@
         top: 0;
         left: 0;
         height: 4rem;
-        background-color: #cf0056;
+        background-color: $colorMain;
         display: flex;
         justify-content: center;
         align-items: center;
