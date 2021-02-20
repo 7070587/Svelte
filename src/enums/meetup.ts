@@ -11,3 +11,8 @@ export enum EButtonType {
     submit = 'submit',
     reset = 'reset',
 }
+
+export enum EMeetupStatus {
+    null,
+    create,
+}
