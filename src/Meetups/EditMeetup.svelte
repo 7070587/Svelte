@@ -6,6 +6,7 @@
 
     import TextInput from './../UI/TextInput.svelte';
     import Button from './../UI/Button.svelte';
+    import Modals from './../UI/Modals.svelte';
 
     const dispatch: (name: string, detail?: any) => void = createEventDispatcher();
 
@@ -17,7 +18,7 @@
         imageUrl: '',
         address: '',
         contactEmail: '',
-        isFavorite: false,
+        isFavorite: true,
     };
     const titleInput: IMeetup.ITextInput = { id: 'title', label: 'Title', value: meetup.title };
     const subTitleInput: IMeetup.ITextInput = { id: 'subTitle', label: 'Sub Title', value: meetup.subTitle };
@@ -32,9 +33,11 @@
         value: meetup.description,
     };
 
-    let buttonSave: IMeetup.IButton = {
-        type: EButtonType.submit,
+    let buttonCancel: IMeetup.IButton = {
+        mode: 'outline',
     };
+
+    let modalTitle: string = 'Edit New Meetup';
 
     function handleTitle(e): void {
         meetup.title = e.target.value;
@@ -63,30 +66,30 @@
     function saveData(): void {
         dispatch('save-data', meetup);
     }
+
+    function closeModal(): void {
+        dispatch('close-modal');
+    }
 </script>
 
-<form on:submit|preventDefault={saveData}>
-    <TextInput textInput={titleInput} on:input={handleTitle} />
-    <TextInput textInput={subTitleInput} on:input={handleSubTitle} />
-    <TextInput textInput={addressInput} on:input={handleAddress} />
-    <TextInput textInput={imageUrlInput} on:input={handleImageUrl} />
-    <TextInput textInput={contactEmailInput} on:input={handleContactEmail} />
-    <TextInput textInput={descriptionInput} on:input={handleDescription} />
+<Modals {modalTitle} on:close-modal>
+    <form on:submit|preventDefault={saveData}>
+        <TextInput textInput={titleInput} on:input={handleTitle} />
+        <TextInput textInput={subTitleInput} on:input={handleSubTitle} />
+        <TextInput textInput={addressInput} on:input={handleAddress} />
+        <TextInput textInput={imageUrlInput} on:input={handleImageUrl} />
+        <TextInput textInput={contactEmailInput} on:input={handleContactEmail} />
+        <TextInput textInput={descriptionInput} on:input={handleDescription} />
+    </form>
 
-    <div class="button">
-        <Button button={buttonSave}>Save</Button>
+    <div class="button" slot="footer">
+        <Button on:click={saveData}>Save</Button>
+        <Button button={buttonCancel} on:click={closeModal}>Cancel</Button>
     </div>
-</form>
+</Modals>
 
 <style>
     form {
-        width: 30rem;
-        max-width: 90%;
-        margin: auto;
-
-        .button {
-            margin-bottom: 0.5rem;
-            margin-top: 1rem;
-        }
+        width: 100%;
     }
 </style>

@@ -43,11 +43,15 @@
         // meetups.push(newMeetup);
 
         meetups = [newMeetup, ...meetups];
-        meetupStatus = EMeetupStatus.null;
+        closeModal();
     }
 
     function clickNewMeetup() {
         meetupStatus = EMeetupStatus.create;
+    }
+
+    function closeModal(): void {
+        meetupStatus = EMeetupStatus.null;
     }
 
     function toggleFavorite(e) {
@@ -69,7 +73,7 @@
     </div>
 
     {#if meetupStatus === EMeetupStatus.create}
-        <EditMeetup on:save-data={saveData} />
+        <EditMeetup on:save-data={saveData} on:close-modal={closeModal} />
     {/if}
     <MeetupGrid {meetups} on:toggle-favorite={toggleFavorite} />
 </main>
