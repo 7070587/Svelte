@@ -2,6 +2,8 @@
     import type { IMeetup } from './modals';
     import { EInputType, EButtonType } from './enums/meetup';
 
+    import { ServiceGenerate } from './helper';
+
     import Header from './UI/Header.svelte';
     import TextInput from './UI/TextInput.svelte';
     import Button from './UI/Button.svelte';
@@ -10,22 +12,24 @@
 
     let meetups: IMeetup.IMeetupItem[] = [
         {
-            id: randomId(),
+            id: ServiceGenerate.randomId(),
             title: 'svelte_title',
             subTitle: 'svelte_subTitle',
             description: 'svelte_description',
             imageUrl: 'https://cdn.pixabay.com/photo/2015/03/26/09/48/chicago-690364_960_720.jpg',
             address: 'svelte_address',
             contactEmail: 'svelte@svelte.svelte',
+            isFavorite: false,
         },
         {
-            id: randomId(),
+            id: ServiceGenerate.randomId(),
             title: 'svelte_title2',
             subTitle: 'svelte_subTitle2',
             description: 'svelte_description2',
             imageUrl: 'https://cdn.pixabay.com/photo/2016/01/19/17/29/earth-1149733_960_720.jpg',
             address: 'svelte_address2',
             contactEmail: 'svelte2@svelte.svelte',
+            isFavorite: false,
         },
     ];
 
@@ -60,7 +64,7 @@
 
     function saveData(params): void {
         const newMeetup: IMeetup.IMeetupItem = JSON.parse(JSON.stringify(meetup));
-        newMeetup.id = randomId();
+        newMeetup.id = ServiceGenerate.randomId();
 
         // attention not work
         // meetups.push(newMeetup);
@@ -93,39 +97,8 @@
         meetup.description = e.target.value;
     }
 
-    function randomId(length: number = 8): string {
-        if (length < 6) {
-            length = 6;
-        } else if (length > 16) {
-            length = 16;
-        }
-
-        const passwordArray: string[] = ['ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz', '1234567890', '!@#$%&*()'];
-        let password: string[] = [];
-        let n: number = 0;
-        for (let i = 0; i < length; i++) {
-            // If password length less than 9, all value random
-            if (password.length < length - 4) {
-                // Get random passwordArray index
-                let arrayRandom = Math.floor(Math.random() * 4);
-                // Get password array value
-                let passwordItem = passwordArray[arrayRandom];
-                // Get password array value random index
-                // Get random real value
-                let item = passwordItem[Math.floor(Math.random() * passwordItem.length)];
-                password.push(item);
-            } else {
-                // If password large then 9, lastest 4 password will push in according to the random password index
-                // Get the array values sequentially
-                let newItem = passwordArray[n];
-                let lastItem = newItem[Math.floor(Math.random() * newItem.length)];
-                // Get array splice index
-                let spliceIndex = Math.floor(Math.random() * password.length);
-                password.splice(spliceIndex, 0, lastItem);
-                n++;
-            }
-        }
-        return password.join('');
+    function toggleFavorite(e) {
+        const id: string = e.detail;
     }
 </script>
 
