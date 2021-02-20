@@ -4,6 +4,7 @@
     import type { IMeetup } from './../modals';
 
     import Button from './../UI/Button.svelte';
+    import Badge from './../UI/Badge.svelte';
 
     export let meetup: IMeetup.IMeetupItem;
 
@@ -21,6 +22,7 @@
     let buttonFavorite: IMeetup.IButton = {
         label: 'Favorite',
         mode: 'outline',
+        color: 'success',
     };
 
     let buttonUnfavorite: IMeetup.IButton = {
@@ -35,7 +37,12 @@
 
 <article>
     <header>
-        <h1>{meetup.title}</h1>
+        <h1>
+            {meetup.title}
+            {#if meetup.isFavorite}
+                <Badge>❤ Favorite</Badge>
+            {/if}
+        </h1>
         <h2>{meetup.subTitle}</h2>
         <h1>{meetup.address}</h1>
     </header>

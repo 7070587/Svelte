@@ -7,13 +7,14 @@
         label: '',
         href: '',
         mode: '',
+        color: '',
     };
 </script>
 
 {#if button.href}
     <a href={button.href}>{button.label}</a>
 {:else}
-    <button type={button.type} class={button.mode} on:click> {button.label} </button>
+    <button type={button.type} class="{button.mode} {button.color}" on:click> {button.label} </button>
 {/if}
 
 <style>

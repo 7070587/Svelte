@@ -24,4 +24,5 @@ export interface IButton {
     label: string;
     href?: string;
     mode?: string;
+    color?: string;
 }
