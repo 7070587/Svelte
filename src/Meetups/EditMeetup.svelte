@@ -2,7 +2,8 @@
     import { createEventDispatcher } from 'svelte';
 
     import type { IMeetup } from './../modals';
-    import { EInputType, EButtonType } from './../enums/meetup';
+    import { EInputType } from './../enums/meetup';
+    import { ServiceValidation } from './../helper';
 
     import TextInput from './../UI/TextInput.svelte';
     import Button from './../UI/Button.svelte';
@@ -20,17 +21,50 @@
         contactEmail: '',
         isFavorite: true,
     };
-    const titleInput: IMeetup.ITextInput = { id: 'title', label: 'Title', value: meetup.title };
-    const subTitleInput: IMeetup.ITextInput = { id: 'subTitle', label: 'Sub Title', value: meetup.subTitle };
-    const addressInput: IMeetup.ITextInput = { id: 'address', label: 'Address', value: meetup.address };
-    const imageUrlInput: IMeetup.ITextInput = { id: 'imageUrl', label: 'Image Url', value: meetup.imageUrl };
-    const contactEmailInput: IMeetup.ITextInput = { id: 'contactEmail', label: 'Contact Email', type: EInputType.email, value: meetup.contactEmail };
+    const titleInput: IMeetup.ITextInput = {
+        id: 'title',
+        label: 'Title',
+        value: meetup.title,
+        valid: false,
+        validMessage: 'Please enter a valid title',
+    };
+    const subTitleInput: IMeetup.ITextInput = {
+        id: 'subTitle',
+        label: 'Sub Title',
+        value: meetup.subTitle,
+        valid: false,
+        validMessage: 'Please enter a valid sub title',
+    };
+    const addressInput: IMeetup.ITextInput = {
+        id: 'address',
+        label: 'Address',
+        value: meetup.address,
+        valid: false,
+        validMessage: 'Please enter a valid address',
+    };
+    const imageUrlInput: IMeetup.ITextInput = {
+        id: 'imageUrl',
+        label: 'Image Url',
+        value: meetup.imageUrl,
+        valid: false,
+        validMessage: 'Please enter a valid image url',
+    };
+    const contactEmailInput: IMeetup.ITextInput = {
+        id: 'contactEmail',
+        label: 'Contact Email',
+        type: EInputType.email,
+        value: meetup.contactEmail,
+        valid: false,
+        validMessage: 'Please enter a valid contact email',
+    };
     const descriptionInput: IMeetup.ITextInput = {
         id: 'description',
         label: 'Description',
         type: EInputType.textarea,
         rows: 3,
         value: meetup.description,
+        valid: false,
+        validMessage: 'Please enter a valid description',
     };
 
     let buttonCancel: IMeetup.IButton = {
@@ -38,6 +72,18 @@
     };
 
     let modalTitle: string = 'Edit New Meetup';
+
+    let isFormValid: boolean = false;
+
+    // watch value, if value change update UI
+    $: titleInput.valid = !ServiceValidation.isEmpty(meetup.title);
+    $: subTitleInput.valid = !ServiceValidation.isEmpty(meetup.subTitle);
+    $: addressInput.valid = !ServiceValidation.isEmpty(meetup.address);
+    $: imageUrlInput.valid = ServiceValidation.isImage(meetup.imageUrl);
+    $: contactEmailInput.valid = ServiceValidation.isEmail(meetup.contactEmail);
+    $: descriptionInput.valid = !ServiceValidation.isEmpty(meetup.description);
+    $: isFormValid =
+        titleInput.valid && subTitleInput.valid && addressInput.valid && imageUrlInput.valid && contactEmailInput.valid && descriptionInput.valid;
 
     function handleTitle(e): void {
         meetup.title = e.target.value;
@@ -63,6 +109,17 @@
         meetup.description = e.target.value;
     }
 
+    function disabledSave(): boolean {
+        return (
+            !titleInput.valid ||
+            !subTitleInput.valid ||
+            !addressInput.valid ||
+            !imageUrlInput.valid ||
+            !contactEmailInput.valid ||
+            !descriptionInput.valid
+        );
+    }
+
     function saveData(): void {
         dispatch('save-data', meetup);
     }
@@ -83,7 +140,7 @@
     </form>
 
     <div class="button" slot="footer">
-        <Button on:click={saveData}>Save</Button>
+        <Button on:click={saveData} disabled={!isFormValid}>Save</Button>
         <Button button={buttonCancel} on:click={closeModal}>Cancel</Button>
     </div>
 </Modals>
