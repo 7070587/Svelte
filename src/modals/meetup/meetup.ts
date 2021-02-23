@@ -8,6 +8,7 @@ export interface IMeetupItem {
     imageUrl: string;
     address: string;
     contactEmail: string;
+
     isFavorite?: boolean;
 }
 
@@ -17,6 +18,9 @@ export interface ITextInput {
     type?: EInputType; // defualt text
     rows?: number;
     value: string;
+
+    valid: boolean;
+    validMessage: string;
 }
 
 export interface IButton {
