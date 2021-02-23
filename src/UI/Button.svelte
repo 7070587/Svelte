@@ -8,12 +8,14 @@
         mode: '',
         color: '',
     };
+
+    export let disabled: boolean = false;
 </script>
 
 {#if button.href}
     <a href={button.href}><slot /></a>
 {:else}
-    <button type={button.type} class="{button.mode} {button.color}" on:click> <slot /> </button>
+    <button type={button.type} class="{button.mode} {button.color}" {disabled} on:click> <slot /> </button>
 {/if}
 
 <style>
