@@ -3,7 +3,7 @@
 
     import type { IMeetup } from './../modals';
     import { EInputType } from './../enums/meetup';
-    import { ServiceValidation } from './../helper';
+    import { ServiceValidation, ServiceGenerate } from './../helper';
 
     import TextInput from './../UI/TextInput.svelte';
     import Button from './../UI/Button.svelte';
@@ -12,7 +12,7 @@
     const dispatch: (name: string, detail?: any) => void = createEventDispatcher();
 
     let meetup: IMeetup.IMeetupItem = {
-        id: '',
+        id: ServiceGenerate.randomId(),
         title: '',
         subTitle: '',
         description: '',
