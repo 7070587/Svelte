@@ -1,5 +1,6 @@
 <script>
     import { createEventDispatcher } from 'svelte';
+    import meetups from './../stores/meetup';
 
     import type { IMeetup } from './../modals';
     import { EInputType } from './../enums/meetup';
@@ -121,6 +122,12 @@
     }
 
     function saveData(): void {
+        const meetupData: IMeetup.IMeetupItem = JSON.parse(JSON.stringify(meetup));
+
+        // attention not work
+        // meetups.push(newMeetup);
+
+        meetups.saveData(meetupData);
         dispatch('save-data', meetup);
     }
 
