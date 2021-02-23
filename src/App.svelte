@@ -4,45 +4,59 @@
 
     import { ServiceGenerate } from './helper';
 
+    import meetups from './stores/meetup';
+
     import Header from './UI/Header.svelte';
     import Button from './UI/Button.svelte';
 
     import MeetupGrid from './Meetups/MeetupGrid.svelte';
     import EditMeetup from './Meetups/EditMeetup.svelte';
 
-    let meetups: IMeetup.IMeetupItem[] = [
-        {
-            id: ServiceGenerate.randomId(),
-            title: 'svelte_title',
-            subTitle: 'svelte_subTitle',
-            description: 'svelte_description',
-            imageUrl: 'https://cdn.pixabay.com/photo/2015/03/26/09/48/chicago-690364_960_720.jpg',
-            address: 'svelte_address',
-            contactEmail: 'svelte@svelte.svelte',
-            isFavorite: true,
-        },
-        {
-            id: ServiceGenerate.randomId(),
-            title: 'svelte_title2',
-            subTitle: 'svelte_subTitle2',
-            description: 'svelte_description2',
-            imageUrl: 'https://cdn.pixabay.com/photo/2016/01/19/17/29/earth-1149733_960_720.jpg',
-            address: 'svelte_address2',
-            contactEmail: 'svelte2@svelte.svelte',
-            isFavorite: false,
-        },
-    ];
+    // not use wriable's data
+    // let meetups: IMeetup.IMeetupItem[] = [
+    //         {
+    //             id: ServiceGenerate.randomId(),
+    //             title: 'svelte_title',
+    //             subTitle: 'svelte_subTitle',
+    //             description: 'svelte_description',
+    //             imageUrl: 'https://cdn.pixabay.com/photo/2015/03/26/09/48/chicago-690364_960_720.jpg',
+    //             address: 'svelte_address',
+    //             contactEmail: 'svelte@svelte.svelte',
+    //             isFavorite: true,
+    //         },
+    //         {
+    //             id: ServiceGenerate.randomId(),
+    //             title: 'svelte_title2',
+    //             subTitle: 'svelte_subTitle2',
+    //             description: 'svelte_description2',
+    //             imageUrl: 'https://cdn.pixabay.com/photo/2016/01/19/17/29/earth-1149733_960_720.jpg',
+    //             address: 'svelte_address2',
+    //             contactEmail: 'svelte2@svelte.svelte',
+    //             isFavorite: false,
+    //         },
+    //     ];
 
     let meetupStatus: EMeetupStatus;
 
+    // not use svelte/store wriable
+    // function saveData(e): void {
+    //     const newMeetup: IMeetup.IMeetupItem = JSON.parse(JSON.stringify(e.detail));
+
+    //     // attention not work
+    //     // meetups.push(newMeetup);
+
+    //     meetups = [newMeetup, ...meetups];
+    //     closeModal();
+    // }
+
+    //  use svelte/store wriable
     function saveData(e): void {
-        const newMeetup: IMeetup.IMeetupItem = JSON.parse(JSON.stringify(e.detail));
-        newMeetup.id = ServiceGenerate.randomId();
+        const meetupData: IMeetup.IMeetupItem = JSON.parse(JSON.stringify(e.detail));
 
         // attention not work
         // meetups.push(newMeetup);
 
-        meetups = [newMeetup, ...meetups];
+        meetups.saveData(meetupData);
         closeModal();
     }
 
@@ -54,14 +68,21 @@
         meetupStatus = EMeetupStatus.null;
     }
 
+    // not use svelte/store wriable
+    // function toggleFavorite(e) {
+    //     const id: string = e.detail;
+    //     const updatedMeetup: IMeetup.IMeetupItem = { ...meetups.find((x) => x.id === id) };
+    //     updatedMeetup.isFavorite = !updatedMeetup.isFavorite;
+    //     const meetupIndex: number = meetups.findIndex((x) => x.id === id);
+    //     const updatedMeetups: IMeetup.IMeetupItem[] = [...meetups];
+    //     updatedMeetups[meetupIndex] = updatedMeetup;
+    //     meetups = updatedMeetups;
+    // }
+
+    // use svelte/store wriable
     function toggleFavorite(e) {
         const id: string = e.detail;
-        const updatedMeetup: IMeetup.IMeetupItem = { ...meetups.find((x) => x.id === id) };
-        updatedMeetup.isFavorite = !updatedMeetup.isFavorite;
-        const meetupIndex: number = meetups.findIndex((x) => x.id === id);
-        const updatedMeetups: IMeetup.IMeetupItem[] = [...meetups];
-        updatedMeetups[meetupIndex] = updatedMeetup;
-        meetups = updatedMeetups;
+        meetups.toggleFavorite(id);
     }
 </script>
 
@@ -75,7 +96,7 @@
     {#if meetupStatus === EMeetupStatus.create}
         <EditMeetup on:save-data={saveData} on:close-modal={closeModal} />
     {/if}
-    <MeetupGrid {meetups} on:toggle-favorite={toggleFavorite} />
+    <MeetupGrid meetups={$meetups} on:toggle-favorite={toggleFavorite} />
 </main>
 
 <style>
