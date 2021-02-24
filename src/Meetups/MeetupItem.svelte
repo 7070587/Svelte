@@ -60,8 +60,8 @@
     <footer>
         <Button button={buttonUnfavorite} on:click={editMeetup}>Edit</Button>
 
-        <Button button={!meetup.isFavorite ? buttonUnfavorite : buttonFavorite} on:click={toggleFavorite}>
-            {meetup.isFavorite ? 'Favorite' : 'Unfavorite'}
+        <Button button={meetup.isFavorite ? buttonUnfavorite : buttonFavorite} on:click={toggleFavorite}>
+            {meetup.isFavorite ? 'Unfavorite' : 'Favorite'}
         </Button>
         <Button on:click={showDetail}>Show Detail</Button>
     </footer>
