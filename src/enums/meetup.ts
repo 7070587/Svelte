@@ -15,6 +15,11 @@ export enum EButtonType {
 export enum EMeetupStatus {
     null,
     create,
+    edit,
+}
+
+export enum EPageAction {
+    null,
     overview,
     detail,
 }
