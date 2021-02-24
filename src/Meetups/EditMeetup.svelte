@@ -157,6 +157,11 @@
     function closeModal(): void {
         dispatch('close-modal');
     }
+
+    function deleteMeetup(): void {
+        meetups.deleteMeetup(id);
+        dispatch('save-data', meetup);
+    }
 </script>
 
 <Modals {modalTitle} on:close-modal>
@@ -171,6 +176,11 @@
 
     <div class="button" slot="footer">
         <Button on:click={saveData} disabled={!isFormValid}>Save</Button>
+
+        {#if id}
+            <Button on:click={deleteMeetup}>Delete</Button>
+        {/if}
+
         <Button button={buttonCancel} on:click={closeModal}>Cancel</Button>
     </div>
 </Modals>
