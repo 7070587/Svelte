@@ -4,7 +4,6 @@
     import { EMeetupStatus, EPageAction } from './enums/meetup';
 
     import Header from './UI/Header.svelte';
-    import Button from './UI/Button.svelte';
 
     import MeetupGrid from './Meetups/MeetupGrid.svelte';
     import EditMeetup from './Meetups/EditMeetup.svelte';
@@ -47,14 +46,10 @@
 
 <main>
     {#if pageAction === EPageAction.overview}
-        <div class="meetup-controls">
-            <Button on:click={clickNewMeetup}>New Meetup</Button>
-        </div>
-
         {#if meetupStatus === EMeetupStatus.edit}
             <EditMeetup on:save-data={saveData} on:close-modal={closeModal} {id} />
         {/if}
-        <MeetupGrid meetups={$meetups} on:show-detail={showDetail} on:edit-meetup={editMeetup} />
+        <MeetupGrid meetups={$meetups} on:show-detail={showDetail} on:edit-meetup={editMeetup} on:create-meetup={clickNewMeetup} />
     {:else}
         <MeetupDetail {id} on:close={closeDetail} />
     {/if}
@@ -63,9 +58,5 @@
 <style>
     main {
         margin-top: 6rem;
-
-        .meetup-controls {
-            margin: 1rem;
-        }
     }
 </style>

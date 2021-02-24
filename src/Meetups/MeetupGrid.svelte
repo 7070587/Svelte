@@ -1,9 +1,14 @@
 <script>
+    import { createEventDispatcher } from 'svelte';
+
     import type { IMeetup } from './../modals';
     import { ESelectMeetup } from './../enums/meetup';
 
     import MeetupItem from './MeetupItem.svelte';
     import MeetupFilter from './MeetupFilter.svelte';
+    import Button from './../UI/Button.svelte';
+
+    const dispatch: (name: string, detail?: any) => void = createEventDispatcher();
 
     export let meetups: IMeetup.IMeetupItem[];
 
@@ -15,10 +20,16 @@
     function selectMeetup(e: any) {
         isFavorite = e.detail === ESelectMeetup.favorite;
     }
+
+    function clickNewMeetup(): void {
+        dispatch('create-meetup');
+    }
 </script>
 
 <section class="meetup-controls">
     <MeetupFilter on:select={selectMeetup} />
+
+    <Button on:click={clickNewMeetup}>New Meetup</Button>
 </section>
 
 <section class="meetups">
@@ -43,5 +54,7 @@
 
     .meetup-controls {
         margin: 1rem;
+        display: flex;
+        justify-content: space-between;
     }
 </style>
