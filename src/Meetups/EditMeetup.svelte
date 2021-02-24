@@ -20,7 +20,7 @@
         imageUrl: '',
         address: '',
         contactEmail: '',
-        isFavorite: true,
+        isFavorite: false,
     };
 
     export let id: string = null;
