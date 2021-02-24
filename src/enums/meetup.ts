@@ -15,4 +15,6 @@ export enum EButtonType {
 export enum EMeetupStatus {
     null,
     create,
+    overview,
+    detail,
 }
