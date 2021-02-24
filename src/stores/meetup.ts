@@ -33,16 +33,21 @@ const meetupsStore = {
     subscribe: meetups.subscribe,
     saveData: (meetupData: IMeetup.IMeetupItem) => {
         const newMeetup: IMeetup.IMeetupItem = { ...meetupData };
-        meetups.update((items: IMeetup.IMeetupItem[]) => {
+        meetups.update((items: IMeetup.IMeetupItem[]): IMeetup.IMeetupItem[] => {
             return [newMeetup, ...items];
         });
     },
     updateMeetup: (id: string, meetupData: IMeetup.IMeetupItem) => {
-        meetups.update((items: IMeetup.IMeetupItem[]) => {
+        meetups.update((items: IMeetup.IMeetupItem[]): IMeetup.IMeetupItem[] => {
             const meetupIndex: number = items.findIndex((x) => x.id === id);
             const updatedMeetups: IMeetup.IMeetupItem[] = [...items];
             updatedMeetups[meetupIndex] = meetupData;
             return updatedMeetups;
+        });
+    },
+    deleteMeetup: (id: string) => {
+        meetups.update((items: IMeetup.IMeetupItem[]): IMeetup.IMeetupItem[] => {
+            return items.filter((x) => x.id !== id);
         });
     },
     toggleFavorite: (id: string) => {
