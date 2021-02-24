@@ -31,6 +31,10 @@
     function showDetail(): void {
         dispatch('show-detail', meetup.id);
     }
+
+    function editMeetup(): void {
+        dispatch('edit-meetup', meetup.id);
+    }
 </script>
 
 <article>
@@ -54,7 +58,7 @@
     </div>
 
     <footer>
-        <Button button={buttonALink}>Contact</Button>
+        <Button button={buttonUnfavorite} on:click={editMeetup}>Edit</Button>
 
         <Button button={!meetup.isFavorite ? buttonUnfavorite : buttonFavorite} on:click={toggleFavorite}>
             {meetup.isFavorite ? 'Favorite' : 'Unfavorite'}
