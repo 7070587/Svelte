@@ -8,8 +8,11 @@
 
     import MeetupGrid from './Meetups/MeetupGrid.svelte';
     import EditMeetup from './Meetups/EditMeetup.svelte';
+    import MeetupDetail from './Meetups/MeetupDetail.svelte';
 
     let meetupStatus: EMeetupStatus;
+    let pageAction: EMeetupStatus = EMeetupStatus.overview;
+    let id: string;
 
     function saveData(): void {
         closeModal();
@@ -22,19 +25,32 @@
     function closeModal(): void {
         meetupStatus = EMeetupStatus.null;
     }
+
+    function showDetail(e): void {
+        pageAction = EMeetupStatus.detail;
+        id = e.detail;
+    }
+
+    function closeDetail(): void {
+        pageAction = EMeetupStatus.overview;
+    }
 </script>
 
 <Header />
 
 <main>
-    <div class="meetup-controls">
-        <Button on:click={clickNewMeetup}>New Meetup</Button>
-    </div>
+    {#if pageAction === EMeetupStatus.overview}
+        <div class="meetup-controls">
+            <Button on:click={clickNewMeetup}>New Meetup</Button>
+        </div>
 
-    {#if meetupStatus === EMeetupStatus.create}
-        <EditMeetup on:save-data={saveData} on:close-modal={closeModal} />
+        {#if meetupStatus === EMeetupStatus.create}
+            <EditMeetup on:save-data={saveData} on:close-modal={closeModal} />
+        {/if}
+        <MeetupGrid meetups={$meetups} on:show-detail={showDetail} />
+    {:else}
+        <MeetupDetail {id} on:close={closeDetail} />
     {/if}
-    <MeetupGrid meetups={$meetups} />
 </main>
 
 <style>
