@@ -23,3 +23,8 @@ export enum EPageAction {
     overview,
     detail,
 }
+
+export enum ESelectMeetup {
+    all,
+    favorite,
+}
