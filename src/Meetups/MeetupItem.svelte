@@ -1,10 +1,13 @@
 <script>
+    import { createEventDispatcher } from 'svelte';
     import meetups from './../stores/meetup';
 
     import type { IMeetup } from './../modals';
 
     import Button from './../UI/Button.svelte';
     import Badge from './../UI/Badge.svelte';
+
+    const dispatch: (name: string, detail?: any) => void = createEventDispatcher();
 
     export let meetup: IMeetup.IMeetupItem;
 
@@ -23,6 +26,10 @@
 
     function toggleFavorite(): void {
         meetups.toggleFavorite(meetup.id);
+    }
+
+    function showDetail(): void {
+        dispatch('show-detail', meetup.id);
     }
 </script>
 
@@ -43,7 +50,7 @@
     </div>
 
     <div class="content">
-        <p>{meetup.description}</p>
+        <p class="description">{meetup.description}</p>
     </div>
 
     <footer>
@@ -52,7 +59,7 @@
         <Button button={!meetup.isFavorite ? buttonUnfavorite : buttonFavorite} on:click={toggleFavorite}>
             {meetup.isFavorite ? 'Favorite' : 'Unfavorite'}
         </Button>
-        <Button>Show Detail</Button>
+        <Button on:click={showDetail}>Show Detail</Button>
     </footer>
 </article>
 
@@ -102,6 +109,15 @@
         p {
             font-size: 1.25rem;
             margin: 0;
+        }
+
+        .description {
+            -webkit-line-clamp: 2; /* 用來限制在一個塊元素顯示的文本的行數 */
+            display: -webkit-box; /* 將對像作為彈性伸縮盒模型顯示 */
+            -webkit-box-orient: vertical; /* 設置或檢查伸縮盒對像的子元素的排列方式 */
+            text-overflow: ellipsis; /*  在多行文本的情況下，用...隱藏超出範圍的文本 */
+            word-break: break-all;
+            overflow: hidden;
         }
 
         div {
