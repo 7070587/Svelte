@@ -10,7 +10,8 @@ const meetups: Writable<IMeetup.IMeetupItem[]> = writable([
         id: ServiceGenerate.randomId(),
         title: 'svelte_title',
         subTitle: 'svelte_subTitle',
-        description: 'svelte_description',
+        description:
+            'svelte_description svelte_description svelte_description svelte_description svelte_description svelte_description svelte_description svelte_description svelte_description svelte_description ',
         imageUrl: 'https://cdn.pixabay.com/photo/2015/03/26/09/48/chicago-690364_960_720.jpg',
         address: 'svelte_address',
         contactEmail: 'svelte@svelte.svelte',
