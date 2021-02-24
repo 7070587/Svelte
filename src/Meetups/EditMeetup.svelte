@@ -22,6 +22,18 @@
         contactEmail: '',
         isFavorite: true,
     };
+
+    export let id: string = null;
+
+    if (id) {
+        const unsubscribe = meetups.subscribe((items) => {
+            const selectedMeetup: IMeetup.IMeetupItem = items.find((x) => x.id === id);
+            meetup = JSON.parse(JSON.stringify(selectedMeetup));
+        });
+
+        unsubscribe();
+    }
+
     const titleInput: IMeetup.ITextInput = {
         id: 'title',
         label: 'Title',
@@ -29,6 +41,7 @@
         valid: false,
         validMessage: 'Please enter a valid title',
     };
+
     const subTitleInput: IMeetup.ITextInput = {
         id: 'subTitle',
         label: 'Sub Title',
@@ -36,6 +49,7 @@
         valid: false,
         validMessage: 'Please enter a valid sub title',
     };
+
     const addressInput: IMeetup.ITextInput = {
         id: 'address',
         label: 'Address',
@@ -43,6 +57,7 @@
         valid: false,
         validMessage: 'Please enter a valid address',
     };
+
     const imageUrlInput: IMeetup.ITextInput = {
         id: 'imageUrl',
         label: 'Image Url',
@@ -50,6 +65,7 @@
         valid: false,
         validMessage: 'Please enter a valid image url',
     };
+
     const contactEmailInput: IMeetup.ITextInput = {
         id: 'contactEmail',
         label: 'Contact Email',
@@ -58,6 +74,7 @@
         valid: false,
         validMessage: 'Please enter a valid contact email',
     };
+
     const descriptionInput: IMeetup.ITextInput = {
         id: 'description',
         label: 'Description',
@@ -72,7 +89,7 @@
         mode: 'outline',
     };
 
-    let modalTitle: string = 'Edit New Meetup';
+    let modalTitle: string = id ? 'Edit Meetup' : 'Create New Meetup';
 
     let isFormValid: boolean = false;
 
@@ -127,7 +144,13 @@
         // attention not work
         // meetups.push(newMeetup);
 
-        meetups.saveData(meetupData);
+        // edit mode
+        if (id) {
+            meetups.updateMeetup(id, meetupData);
+        } else {
+            meetups.saveData(meetupData);
+        }
+
         dispatch('save-data', meetup);
     }
 
