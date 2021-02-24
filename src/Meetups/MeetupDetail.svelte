@@ -25,9 +25,7 @@
         href: `mailto:${selectedMeetup.contactEmail}`,
     };
 
-    // $: selectedMeetup.contactEmail;
-
-    function closeModal(): void {
+    function closeDetail(): void {
         dispatch('close');
     }
 
@@ -46,7 +44,7 @@
         <h2>{selectedMeetup.title} - {selectedMeetup.address}</h2>
         <p>{selectedMeetup.description}</p>
         <Button button={buttonALink} on:click>Contact</Button>
-        <Button button={buttonCancel} on:click={closeModal}>Close</Button>
+        <Button button={buttonCancel} on:click={closeDetail}>Close</Button>
     </div>
 </section>
 
