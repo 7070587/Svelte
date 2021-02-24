@@ -45,8 +45,8 @@
                 <Badge>❤ Favorite</Badge>
             {/if}
         </h1>
-        <h2>{meetup.subTitle}</h2>
-        <h1>{meetup.address}</h1>
+        <h2 class="text-overflow-ellipsis">{meetup.subTitle}</h2>
+        <h1 class="text-overflow-ellipsis">{meetup.address}</h1>
     </header>
 
     <div class="image">
@@ -54,7 +54,7 @@
     </div>
 
     <div class="content">
-        <p class="description">{meetup.description}</p>
+        <p class="text-overflow-ellipsis">{meetup.description}</p>
     </div>
 
     <footer>
@@ -115,7 +115,7 @@
             margin: 0;
         }
 
-        .description {
+        .text-overflow-ellipsis {
             -webkit-line-clamp: 2; /* 用來限制在一個塊元素顯示的文本的行數 */
             display: -webkit-box; /* 將對像作為彈性伸縮盒模型顯示 */
             -webkit-box-orient: vertical; /* 設置或檢查伸縮盒對像的子元素的排列方式 */
