@@ -34,6 +34,10 @@
     <Button on:click={clickNewMeetup}>New Meetup</Button>
 </section>
 
+{#if filteredMeetups.length === 0}
+    <p class="no-meetup">No meetups found, you can start adding some meetups</p>
+{/if}
+
 <section class="meetups">
     {#each filteredMeetups as meetup (meetup.id)}
         <div transition:scale={{ duration: 800 }} animate:flip={{ duration: 800 }}>
@@ -60,5 +64,11 @@
         margin: 1rem;
         display: flex;
         justify-content: space-between;
+    }
+
+    .no-meetup {
+        margin: 1rem;
+        font-weight: bold;
+        font-size: 2rem;
     }
 </style>

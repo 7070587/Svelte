@@ -7,15 +7,16 @@
     import { EMeetupStatus, EPageAction } from './enums/meetup';
 
     import Header from './UI/Header.svelte';
+    import Loading from './UI/Loading.svelte';
 
     import MeetupGrid from './Meetups/MeetupGrid.svelte';
     import EditMeetup from './Meetups/EditMeetup.svelte';
     import MeetupDetail from './Meetups/MeetupDetail.svelte';
-    import { xlink_attr } from 'svelte/internal';
 
     let meetupStatus: EMeetupStatus;
     let pageAction: EPageAction = EPageAction.overview;
     let id: string;
+    let isLoadong: boolean = true;
 
     // fetch data in App page
 
@@ -34,7 +35,10 @@
             loadMeetups.push({ ...data[key], id: key });
         }
 
-        meetups.setMeetup(loadMeetups);
+        setTimeout(() => {
+            isLoadong = false;
+            meetups.setMeetup(loadMeetups);
+        }, 1000);
     }
 
     function saveMeetup(): void {
@@ -73,7 +77,12 @@
         {#if meetupStatus === EMeetupStatus.edit}
             <EditMeetup on:save-data={saveMeetup} on:close-modal={closeModal} {id} />
         {/if}
-        <MeetupGrid meetups={$meetups} on:show-detail={showDetail} on:edit-meetup={editMeetup} on:create-meetup={clickNewMeetup} />
+
+        {#if isLoadong}
+            <Loading />
+        {:else}
+            <MeetupGrid meetups={$meetups} on:show-detail={showDetail} on:edit-meetup={editMeetup} on:create-meetup={clickNewMeetup} />
+        {/if}
     {:else}
         <MeetupDetail {id} on:close={closeDetail} />
     {/if}
