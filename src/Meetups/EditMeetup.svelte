@@ -127,28 +127,27 @@
         meetup.description = e.target.value;
     }
 
-    function disabledSave(): boolean {
-        return (
-            !titleInput.valid ||
-            !subTitleInput.valid ||
-            !addressInput.valid ||
-            !imageUrlInput.valid ||
-            !contactEmailInput.valid ||
-            !descriptionInput.valid
-        );
-    }
-
-    function saveData(): void {
-        const meetupData: IMeetup.IMeetupItem = JSON.parse(JSON.stringify(meetup));
-
-        // attention not work
-        // meetups.push(newMeetup);
+    async function saveData(): Promise<void> {
+        // const meetupData: IMeetup.IMeetupItem = JSON.parse(JSON.stringify(meetup));
+        const meetupData: IMeetup.IMeetupItem = meetup;
 
         // edit mode
         if (id) {
             meetups.updateMeetup(id, meetupData);
         } else {
+            const res: any = await fetch('https://svelte-meeup-default-rtdb.firebaseio.com/meetups.json', {
+                method: 'POST',
+                body: JSON.stringify(meetupData),
+                headers: { 'Content-Type': 'application/json' },
+            }).catch((err) => console.error(err));
+
+            if (!res.ok) throw new Error('An error occured, please try again');
+
+            let data: { name: string } = await res.json();
+            meetupData.id = data.name;
             meetups.saveData(meetupData);
+
+            console.log('meetupData => ', meetupData);
         }
 
         dispatch('save-data', meetup);
