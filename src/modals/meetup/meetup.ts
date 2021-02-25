@@ -29,3 +29,13 @@ export interface IButton {
     mode?: string;
     color?: string;
 }
+
+export interface IFlyParams {
+    delay?: number;
+    duration?: number;
+    easing?: (t: number) => number;
+    x?: number;
+    y?: number;
+    opacity?: number;
+}
+
