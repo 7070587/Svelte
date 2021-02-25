@@ -1,7 +1,7 @@
 import type { EInputType, EButtonType } from './../../enums/meetup';
 
 export interface IMeetupItem {
-    id: string;
+    id?: string;
     title: string;
     subTitle: string;
     description: string;
@@ -38,4 +38,3 @@ export interface IFlyParams {
     y?: number;
     opacity?: number;
 }
-
