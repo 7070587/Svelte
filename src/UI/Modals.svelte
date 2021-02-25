@@ -1,5 +1,8 @@
 <script>
     import { createEventDispatcher } from 'svelte';
+    import { fly, fade } from 'svelte/transition';
+
+    import type { IMeetup } from './../modals';
 
     import Button from './Button.svelte';
 
@@ -7,13 +10,18 @@
 
     export let modalTitle: string;
 
+    let flyTransition: IMeetup.IFlyParams = {
+        y: 300,
+        duration: 650,
+    };
+
     function closeModal(): void {
         dispatch('close-modal');
     }
 </script>
 
-<div class="modal-backdrop" on:click={closeModal} />
-<div class="modal">
+<div transition:fade class="modal-backdrop" on:click={closeModal} />
+<div transition:fly={flyTransition} class="modal">
     <h1>{modalTitle}</h1>
     <div class="content">
         <slot />

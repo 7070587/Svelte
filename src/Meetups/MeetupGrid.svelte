@@ -1,5 +1,7 @@
 <script>
     import { createEventDispatcher } from 'svelte';
+    import { scale, fade } from 'svelte/transition';
+    import { flip } from 'svelte/animate';
 
     import type { IMeetup } from './../modals';
     import { ESelectMeetup } from './../enums/meetup';
@@ -34,7 +36,9 @@
 
 <section class="meetups">
     {#each filteredMeetups as meetup (meetup.id)}
-        <MeetupItem {meetup} on:show-detail on:edit-meetup />
+        <div transition:scale={{ duration: 800 }} animate:flip={{ duration: 800 }}>
+            <MeetupItem {meetup} on:show-detail on:edit-meetup />
+        </div>
     {/each}
 </section>
 
