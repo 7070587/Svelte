@@ -133,6 +133,15 @@
 
         // edit mode
         if (id) {
+            if (meetupData.id) delete meetupData.id;
+            const res: any = await fetch(`https://svelte-meeup-default-rtdb.firebaseio.com/meetups/${id}.json`, {
+                method: 'PATCH',
+                body: JSON.stringify(meetupData),
+                headers: { 'Content-Type': 'application/json' },
+            }).catch((err) => console.error(err));
+
+            if (!res.ok) throw new Error('An error occured, please try again');
+
             meetups.updateMeetup(id, meetupData);
         } else {
             const res: any = await fetch('https://svelte-meeup-default-rtdb.firebaseio.com/meetups.json', {
