@@ -1,4 +1,7 @@
 <script>
+    import { onMount } from 'svelte';
+
+    import type { IMeetup } from './modals';
     import meetups from './stores/meetup';
 
     import { EMeetupStatus, EPageAction } from './enums/meetup';
@@ -8,12 +11,33 @@
     import MeetupGrid from './Meetups/MeetupGrid.svelte';
     import EditMeetup from './Meetups/EditMeetup.svelte';
     import MeetupDetail from './Meetups/MeetupDetail.svelte';
+    import { xlink_attr } from 'svelte/internal';
 
     let meetupStatus: EMeetupStatus;
     let pageAction: EPageAction = EPageAction.overview;
     let id: string;
 
-    function saveData(): void {
+    // fetch data in App page
+
+    onMount(
+        async (): Promise<void> => {
+            await getAPIData();
+        },
+    );
+
+    async function getAPIData(): Promise<void> {
+        let res: any = await fetch('https://svelte-meeup-default-rtdb.firebaseio.com/meetups.json').catch((err) => console.error(err));
+        if (!res.ok) throw new Error('Fetch data error occured, please try again');
+        let data: IMeetup.IMeetupItem = await res.json();
+        const loadMeetups: IMeetup.IMeetupItem[] = [];
+        for (const key in data) {
+            loadMeetups.push({ ...data[key], id: key });
+        }
+
+        meetups.setMeetup(loadMeetups);
+    }
+
+    function saveMeetup(): void {
         closeModal();
     }
 
@@ -47,7 +71,7 @@
 <main>
     {#if pageAction === EPageAction.overview}
         {#if meetupStatus === EMeetupStatus.edit}
-            <EditMeetup on:save-data={saveData} on:close-modal={closeModal} {id} />
+            <EditMeetup on:save-data={saveMeetup} on:close-modal={closeModal} {id} />
         {/if}
         <MeetupGrid meetups={$meetups} on:show-detail={showDetail} on:edit-meetup={editMeetup} on:create-meetup={clickNewMeetup} />
     {:else}
