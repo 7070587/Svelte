@@ -1,5 +1,6 @@
 <script>
     import { createEventDispatcher } from 'svelte';
+
     import meetups from './../stores/meetup';
 
     import type { IMeetup } from './../modals';
@@ -45,8 +46,8 @@
                 <Badge>❤ Favorite</Badge>
             {/if}
         </h1>
-        <h2 class="text-overflow-ellipsis">{meetup.subTitle}</h2>
-        <h1 class="text-overflow-ellipsis">{meetup.address}</h1>
+        <h2 class="text-overflow-ellipsis text-overflow-ellipsis-1">{meetup.subTitle}</h2>
+        <h1 class="text-overflow-ellipsis text-overflow-ellipsis-1">{meetup.address}</h1>
     </header>
 
     <div class="image">
@@ -54,7 +55,7 @@
     </div>
 
     <div class="content">
-        <p class="text-overflow-ellipsis">{meetup.description}</p>
+        <p class="text-overflow-ellipsis text-overflow-ellipsis-2">{meetup.description}</p>
     </div>
 
     <footer>
@@ -73,6 +74,22 @@
         border-radius: 5px;
         background: white;
         margin: 1rem;
+
+        .text-overflow-ellipsis {
+            display: -webkit-box; /* 將對像作為彈性伸縮盒模型顯示 */
+            -webkit-box-orient: vertical; /* 設置或檢查伸縮盒對像的子元素的排列方式 */
+            text-overflow: ellipsis; /*  在多行文本的情況下，用...隱藏超出範圍的文本 */
+            word-break: break-all;
+            overflow: hidden;
+        }
+
+        .text-overflow-ellipsis-1 {
+            -webkit-line-clamp: 1; /* 用來限制在一個塊元素顯示的文本的行數 */
+        }
+
+        .text-overflow-ellipsis-2 {
+            -webkit-line-clamp: 2; /* 用來限制在一個塊元素顯示的文本的行數 */
+        }
 
         header,
         .content,
@@ -113,15 +130,6 @@
         p {
             font-size: 1.25rem;
             margin: 0;
-        }
-
-        .text-overflow-ellipsis {
-            -webkit-line-clamp: 2; /* 用來限制在一個塊元素顯示的文本的行數 */
-            display: -webkit-box; /* 將對像作為彈性伸縮盒模型顯示 */
-            -webkit-box-orient: vertical; /* 設置或檢查伸縮盒對像的子元素的排列方式 */
-            text-overflow: ellipsis; /*  在多行文本的情況下，用...隱藏超出範圍的文本 */
-            word-break: break-all;
-            overflow: hidden;
         }
 
         div {
