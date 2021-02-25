@@ -13,7 +13,7 @@
     const dispatch: (name: string, detail?: any) => void = createEventDispatcher();
 
     let meetup: IMeetup.IMeetupItem = {
-        id: ServiceGenerate.randomId(),
+        // id: ServiceGenerate.randomId(),
         title: '',
         subTitle: '',
         description: '',
@@ -127,7 +127,7 @@
         meetup.description = e.target.value;
     }
 
-    async function saveData(): Promise<void> {
+    async function saveMeetup(): Promise<void> {
         // const meetupData: IMeetup.IMeetupItem = JSON.parse(JSON.stringify(meetup));
         const meetupData: IMeetup.IMeetupItem = meetup;
 
@@ -145,7 +145,7 @@
 
             let data: { name: string } = await res.json();
             meetupData.id = data.name;
-            meetups.saveData(meetupData);
+            meetups.saveMeetup(meetupData);
 
             console.log('meetupData => ', meetupData);
         }
@@ -164,7 +164,7 @@
 </script>
 
 <Modals {modalTitle} on:close-modal>
-    <form on:submit|preventDefault={saveData}>
+    <form on:submit|preventDefault={saveMeetup}>
         <TextInput textInput={titleInput} on:input={handleTitle} />
         <TextInput textInput={subTitleInput} on:input={handleSubTitle} />
         <TextInput textInput={addressInput} on:input={handleAddress} />
@@ -174,7 +174,7 @@
     </form>
 
     <div class="button" slot="footer">
-        <Button on:click={saveData} disabled={!isFormValid}>Save</Button>
+        <Button on:click={saveMeetup} disabled={!isFormValid}>Save</Button>
 
         {#if id}
             <Button on:click={deleteMeetup}>Delete</Button>
