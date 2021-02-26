@@ -8,6 +8,7 @@
 
     import Header from './UI/Header.svelte';
     import Loading from './UI/Loading.svelte';
+    import Errors from './UI/Errors.svelte';
 
     import MeetupGrid from './Meetups/MeetupGrid.svelte';
     import EditMeetup from './Meetups/EditMeetup.svelte';
@@ -16,7 +17,8 @@
     let meetupStatus: EMeetupStatus;
     let pageAction: EPageAction = EPageAction.overview;
     let id: string;
-    let isLoadong: boolean = true;
+    let isLoadong: boolean = false;
+    let errorData;
 
     // fetch data in App page
 
@@ -27,7 +29,13 @@
     );
 
     async function getAPIData(): Promise<void> {
-        let res: any = await fetch('https://svelte-meeup-default-rtdb.firebaseio.com/meetups.json').catch((err) => console.error(err));
+        isLoadong = true;
+        let res: any = await fetch('https://svelte-meeup-default-rtdb.firebaseio.com/meetups.json').catch((err) => {
+            errorData = err;
+            console.error(err);
+        });
+
+        isLoadong = false;
         if (!res.ok) throw new Error('Fetch data error occured, please try again');
         let data: IMeetup.IMeetupItem = await res.json();
         const loadMeetups: IMeetup.IMeetupItem[] = [];
@@ -68,7 +76,18 @@
         meetupStatus = EMeetupStatus.edit;
         id = e.detail;
     }
+
+    function closeError(): void {
+        errorData = null;
+    }
 </script>
+
+<!-- <Errors message={errorData} on:close-modal={closeError} /> -->
+
+{#if errorData && errorData.message}
+    <!-- <Errors message={errorData.message} /> -->
+    <Errors message="error" />
+{/if}
 
 <Header />
 
