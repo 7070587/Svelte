@@ -37,7 +37,7 @@
 
         setTimeout(() => {
             isLoadong = false;
-            meetups.setMeetup(loadMeetups);
+            meetups.setMeetup(loadMeetups.reverse());
         }, 1000);
     }
 
