@@ -8,7 +8,7 @@
 
     import TextInput from './../UI/TextInput.svelte';
     import Button from './../UI/Button.svelte';
-    import Modals from './../UI/Modals.svelte';
+    import Modals from '../UI/Modal.svelte';
 
     const dispatch: (name: string, detail?: any) => void = createEventDispatcher();
 

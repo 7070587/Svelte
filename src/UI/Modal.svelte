@@ -2,7 +2,7 @@
     import { createEventDispatcher } from 'svelte';
     import { fly, fade } from 'svelte/transition';
 
-    import type { IMeetup } from './../modals';
+    import type { IMeetup } from '../modals';
 
     import Button from './Button.svelte';
 
