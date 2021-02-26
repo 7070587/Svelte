@@ -18,7 +18,7 @@
     let pageAction: EPageAction = EPageAction.overview;
     let id: string;
     let isLoadong: boolean = false;
-    let errorData;
+    let errorMessage: string = '';
 
     // fetch data in App page
 
@@ -32,6 +32,7 @@
         isLoadong = true;
         let res: any = await fetch('https://svelte-meeup-default-rtdb.firebaseio.com/meetups.json').catch((err) => {
             errorData = err;
+            errorMessage = err ?? errorMessage;
             console.error(err);
         });
 
@@ -78,15 +79,14 @@
     }
 
     function closeError(): void {
-        errorData = null;
+        errorMessage = null;
     }
 </script>
 
-<!-- <Errors message={errorData} on:close-modal={closeError} /> -->
+<!-- <Errors message={errorMessage} on:close-modal={closeError} /> -->
 
-{#if errorData && errorData.message}
-    <!-- <Errors message={errorData.message} /> -->
-    <Errors message="error" />
+{#if errorMessage}
+    <Errors message={errorMessage} on:close-modal={closeError} />
 {/if}
 
 <Header />
