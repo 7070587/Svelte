@@ -7,10 +7,13 @@
 
     import Button from './../UI/Button.svelte';
     import Badge from './../UI/Badge.svelte';
+    import Loading from './../UI/Loading.svelte';
 
     const dispatch: (name: string, detail?: any) => void = createEventDispatcher();
 
     export let meetup: IMeetup.IMeetupItem;
+
+    let isLoading: boolean = false;
 
     let buttonALink: IMeetup.IButton = {
         href: `mailto:${meetup.contactEmail}`,
@@ -26,17 +29,21 @@
     };
 
     async function toggleFavorite(): Promise<void> {
-        const id: string = meetup.id;
+        isLoading = true;
 
         // if (meetup.id) delete meetup.id;
         meetup.isFavorite = !meetup.isFavorite;
-        const res: any = await fetch(`https://svelte-meeup-default-rtdb.firebaseio.com/meetups/${id}.json`, {
+        const res: any = await fetch(`https://svelte-meeup-default-rtdb.firebaseio.com/meetups/${meetup.id}.json`, {
             method: 'PATCH',
             body: JSON.stringify(meetup),
             headers: { 'Content-Type': 'application/json' },
-        }).catch((err) => console.error(err));
+        }).catch((err) => {
+            isLoading = false;
+            console.error(err);
+        });
 
         if (!res.ok) throw new Error('An error occured, please try again');
+        isLoading = false;
 
         meetups.toggleFavorite(meetup);
     }
@@ -74,9 +81,14 @@
     <footer>
         <Button button={buttonUnfavorite} on:click={editMeetup}>Edit</Button>
 
-        <Button button={meetup.isFavorite ? buttonUnfavorite : buttonFavorite} on:click={toggleFavorite}>
-            {meetup.isFavorite ? 'Unfavorite' : 'Favorite'}
-        </Button>
+        {#if isLoading}
+            <span> Changing... &ensp;&ensp;</span>
+        {:else}
+            <Button button={meetup.isFavorite ? buttonUnfavorite : buttonFavorite} on:click={toggleFavorite}>
+                {meetup.isFavorite ? 'Unfavorite' : 'Favorite'}
+            </Button>
+        {/if}
+
         <Button on:click={showDetail}>Show Detail</Button>
     </footer>
 </article>
