@@ -25,8 +25,20 @@
         mode: 'outline',
     };
 
-    function toggleFavorite(): void {
-        meetups.toggleFavorite(meetup.id);
+    async function toggleFavorite(): Promise<void> {
+        const id: string = meetup.id;
+
+        // if (meetup.id) delete meetup.id;
+        meetup.isFavorite = !meetup.isFavorite;
+        const res: any = await fetch(`https://svelte-meeup-default-rtdb.firebaseio.com/meetups/${id}.json`, {
+            method: 'PATCH',
+            body: JSON.stringify(meetup),
+            headers: { 'Content-Type': 'application/json' },
+        }).catch((err) => console.error(err));
+
+        if (!res.ok) throw new Error('An error occured, please try again');
+
+        meetups.toggleFavorite(meetup);
     }
 
     function showDetail(): void {
@@ -43,6 +55,7 @@
         <h1>
             {meetup.title}
             {#if meetup.isFavorite}
+                {meetup.isFavorite}
                 <Badge>❤ Favorite</Badge>
             {/if}
         </h1>

@@ -53,11 +53,11 @@ const meetupsStore = {
             return items.filter((x) => x.id !== id);
         });
     },
-    toggleFavorite: (id: string) => {
+    toggleFavorite: (meetup: IMeetup.IMeetupItem) => {
         meetups.update((items: IMeetup.IMeetupItem[]) => {
-            const updatedMeetup: IMeetup.IMeetupItem = { ...items.find((x) => x.id === id) };
-            updatedMeetup.isFavorite = !updatedMeetup.isFavorite;
-            const meetupIndex: number = items.findIndex((x) => x.id === id);
+            const updatedMeetup: IMeetup.IMeetupItem = { ...items.find((x) => x.id === meetup.id) };
+            updatedMeetup.isFavorite = meetup.isFavorite;
+            const meetupIndex: number = items.findIndex((x) => x.id === meetup.id);
             const updatedMeetups: IMeetup.IMeetupItem[] = [...items];
             updatedMeetups[meetupIndex] = updatedMeetup;
             return updatedMeetups;
