@@ -166,7 +166,13 @@
         dispatch('close-modal');
     }
 
-    function deleteMeetup(): void {
+    async function deleteMeetup(): Promise<void> {
+        const res: any = await fetch(`https://svelte-meeup-default-rtdb.firebaseio.com/meetups/${id}.json`, {
+            method: 'DELETE',
+        }).catch((err) => console.error(err));
+
+        if (!res.ok) throw new Error('An error occured, please try again');
+
         meetups.deleteMeetup(id);
         dispatch('save-data', meetup);
     }
