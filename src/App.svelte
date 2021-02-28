@@ -83,8 +83,6 @@
     }
 </script>
 
-<!-- <Errors message={errorMessage} on:close-modal={closeError} /> -->
-
 {#if errorMessage}
     <Errors message={errorMessage} on:close-modal={closeError} />
 {/if}
