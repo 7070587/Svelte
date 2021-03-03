@@ -1,12 +1,16 @@
-<script lang="ts">
-	export let segment: string;
+<script>
+    import Header from '../components/UI/Header.svelte';
+    // export let segment;
 </script>
 
-<style>
-
-</style>
-
+<Header />
 
 <main>
-	<slot></slot>
+    <slot />
 </main>
+
+<style>
+    main {
+        margin-top: 5rem;
+    }
+</style>
