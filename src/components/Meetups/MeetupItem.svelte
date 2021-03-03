@@ -16,7 +16,7 @@
     let isLoading: boolean = false;
 
     let buttonALink: IMeetup.IButton = {
-        href: `mailto:${meetup.contactEmail}`,
+        href: `${meetup.id}`,
     };
 
     let buttonFavorite: IMeetup.IButton = {
@@ -89,7 +89,7 @@
             </Button>
         {/if}
 
-        <Button on:click={showDetail}>Show Detail</Button>
+        <Button button={buttonALink} on:click={showDetail}>Show Detail</Button>
     </footer>
 </article>
 
