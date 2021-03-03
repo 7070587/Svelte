@@ -8,11 +8,8 @@
         params: any;
     }
 
-    let id: string;
-    let errorMessage: string = '';
-
     export function preload(page: IPage): Promise<any> {
-        console.log('page => ', page);
+        // console.log('page => ', page);
 
         const meetupId: string = page.params.id;
 

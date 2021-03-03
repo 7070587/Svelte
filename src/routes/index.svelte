@@ -83,6 +83,7 @@
     let filteredMeetups: IMeetup.IMeetupItem[] = [];
     let loadedMeetups: IMeetup.IMeetupItem[] = [];
 
+    // for ssr
     $: filteredMeetups = isFavorite ? loadedMeetups.filter((x: IMeetup.IMeetupItem) => x.isFavorite) : loadedMeetups;
 
     let unsubscribe: Function;
@@ -100,12 +101,24 @@
         }
     });
 
+    // for ssr
     onMount(() => {
         unsubscribe = meetups.subscribe((item: IMeetup.IMeetupItem[]) => {
             loadedMeetups = item;
         });
         meetups.setMeetup(fetchedMeetups.reverse());
     });
+
+    // for static
+    // $: filteredMeetups = isFavorite ? fetchedMeetups.filter((x: IMeetup.IMeetupItem) => x.isFavorite) : fetchedMeetups;
+
+    // for static
+    // onMount(() => {
+    //     meetups.setMeetup(fetchedMeetups.reverse());
+    //     unsubscribe = meetups.subscribe((item: IMeetup.IMeetupItem[]) => {
+    //         fetchedMeetups = item;
+    //     });
+    // });
 
     // async function getAPIData(): Promise<void> {
     //         isLoadong = true;
