@@ -1,10 +1,67 @@
+<script context="module">
+    import type { IMeetup } from '../modals';
+
+    let isLoadong: boolean = false;
+
+    let id: string;
+    let errorMessage: string = '';
+
+    export function preload(page): Promise<any> {
+        console.log('page => ', page);
+
+        return this.fetch('https://svelte-meeup-default-rtdb.firebaseio.com/meetups.json')
+            .then((res) => {
+                if (!res.ok) {
+                    throw new Error('Fetching meetups failed, please try again later!');
+                }
+                return res.json();
+            })
+            .then((data) => {
+                const fetchedMeetups: IMeetup.IMeetupItem[] = [];
+                for (const key in data) {
+                    fetchedMeetups.push({ ...data[key], id: key });
+                }
+
+                return { fetchedMeetups: fetchedMeetups };
+            })
+            .catch((err) => {
+                isLoadong = false;
+                errorMessage = err;
+                errorMessage = err ?? errorMessage;
+                console.error(err);
+                this.error(500, 'Could not fetch meetups');
+            });
+    }
+
+    // no use, for now  not know reason
+    // export async function preload(page): Promise<any> {
+    //     console.log('page => ', page);
+
+    //     let res: any = await this.fetch('https://svelte-meeup-default-rtdb.firebaseio.com/meetups.json').catch((err) => {
+    //         isLoadong = false;
+    //         errorMessage = err;
+    //         errorMessage = err ?? errorMessage;
+    //         console.error(err);
+    //         this.error(500, 'Could not fetch meetups');
+    //     });
+
+    //     if (res) isLoadong = false;
+    //     if (!res.ok) throw new Error('Fetch data error occured, please try again');
+    //     let data: IMeetup.IMeetupItem = await res.json();
+    //     const fetchedMeetups: IMeetup.IMeetupItem[] = [];
+    //     for (const key in data) {
+    //         fetchedMeetups.push({ ...data[key], id: key });
+    //     }
+
+    //     return fetchedMeetups;
+    // }
+</script>
+
 <script>
     import { onMount, onDestroy, createEventDispatcher } from 'svelte';
-    import type { Writable } from 'svelte/store';
     import { scale } from 'svelte/transition';
     import { flip } from 'svelte/animate';
 
-    import type { IMeetup } from '../modals';
     import { ESelectMeetup, EMeetupStatus } from '../enums/meetup';
 
     import meetups from '../stores/meetup';
@@ -18,55 +75,55 @@
 
     const dispatch: (name: string, detail?: any) => void = createEventDispatcher();
 
-    let meetupStatus: EMeetupStatus;
-
-    let isLoadong: boolean = false;
     let isFavorite: boolean = false;
 
-    let id: string;
-    let errorMessage: string = '';
+    let meetupStatus: EMeetupStatus;
 
-    let fetchedMeetups: IMeetup.IMeetupItem[] = [];
+    export let fetchedMeetups: IMeetup.IMeetupItem[] = [];
     let filteredMeetups: IMeetup.IMeetupItem[] = [];
 
     $: filteredMeetups = isFavorite ? fetchedMeetups.filter((x: IMeetup.IMeetupItem) => x.isFavorite) : fetchedMeetups;
 
-    let unsubscribe: Function;
+    // let unsubscribe: Function;
 
-    // fetch data in App page
-    onMount(
-        async (): Promise<void> => {
-            await getAPIData();
-        },
-    );
+    // fetch data in client side
+    // onMount(
+    //     async (): Promise<void> => {
+    //         await getAPIData();
+    //     },
+    // );
 
-    onDestroy(() => {
-        if (unsubscribe) {
-            unsubscribe();
-        }
+    // onDestroy(() => {
+    //     if (unsubscribe) {
+    //         unsubscribe();
+    //     }
+    // });
+
+    onMount(() => {
+        meetups.setMeetup(fetchedMeetups.reverse());
     });
 
-    async function getAPIData(): Promise<void> {
-        isLoadong = true;
-        unsubscribe = meetups.subscribe((items) => (fetchedMeetups = items));
-        console.log(' => ', unsubscribe);
-        let res: any = await fetch('https://svelte-meeup-default-rtdb.firebaseio.com/meetups.json').catch((err) => {
-            isLoadong = false;
-            errorMessage = err;
-            errorMessage = err ?? errorMessage;
-            console.error(err);
-        });
+    // async function getAPIData(): Promise<void> {
+    //         isLoadong = true;
+    //         unsubscribe = meetups.subscribe((items) => (fetchedMeetups = items));
+    //         console.log(' => ', unsubscribe);
+    //         let res: any = await fetch('https://svelte-meeup-default-rtdb.firebaseio.com/meetups.json').catch((err) => {
+    //             isLoadong = false;
+    //             errorMessage = err;
+    //             errorMessage = err ?? errorMessage;
+    //             console.error(err);
+    //         });
 
-        if (res) isLoadong = false;
-        if (!res.ok) throw new Error('Fetch data error occured, please try again');
-        let data: IMeetup.IMeetupItem = await res.json();
-        const loadMeetups: IMeetup.IMeetupItem[] = [];
-        for (const key in data) {
-            loadMeetups.push({ ...data[key], id: key });
-        }
+    //         if (res) isLoadong = false;
+    //         if (!res.ok) throw new Error('Fetch data error occured, please try again');
+    //         let data: IMeetup.IMeetupItem = await res.json();
+    //         const loadMeetups: IMeetup.IMeetupItem[] = [];
+    //         for (const key in data) {
+    //             loadMeetups.push({ ...data[key], id: key });
+    //         }
 
-        meetups.setMeetup(loadMeetups.reverse());
-    }
+    //         meetups.setMeetup(loadMeetups.reverse());
+    //     }
 
     function saveMeetup(): void {
         closeModal();
