@@ -81,10 +81,11 @@
 
     export let fetchedMeetups: IMeetup.IMeetupItem[] = [];
     let filteredMeetups: IMeetup.IMeetupItem[] = [];
+    let loadedMeetups: IMeetup.IMeetupItem[] = [];
 
-    $: filteredMeetups = isFavorite ? fetchedMeetups.filter((x: IMeetup.IMeetupItem) => x.isFavorite) : fetchedMeetups;
+    $: filteredMeetups = isFavorite ? loadedMeetups.filter((x: IMeetup.IMeetupItem) => x.isFavorite) : loadedMeetups;
 
-    // let unsubscribe: Function;
+    let unsubscribe: Function;
 
     // fetch data in client side
     // onMount(
@@ -93,13 +94,16 @@
     //     },
     // );
 
-    // onDestroy(() => {
-    //     if (unsubscribe) {
-    //         unsubscribe();
-    //     }
-    // });
+    onDestroy(() => {
+        if (unsubscribe) {
+            unsubscribe();
+        }
+    });
 
     onMount(() => {
+        unsubscribe = meetups.subscribe((item: IMeetup.IMeetupItem[]) => {
+            loadedMeetups = item;
+        });
         meetups.setMeetup(fetchedMeetups.reverse());
     });
 
@@ -175,7 +179,8 @@
                 <MeetupItem {meetup} on:show-detail on:edit-meetup />
             </div>
         {/each}
-    </section>{/if}
+    </section>
+{/if}
 
 <style>
     .fetchedMeetups {
