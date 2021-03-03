@@ -7,7 +7,7 @@
     let errorMessage: string = '';
 
     export function preload(page): Promise<any> {
-        console.log('page => ', page);
+        // console.log('page => ', page);
 
         return this.fetch('https://svelte-meeup-default-rtdb.firebaseio.com/meetups.json')
             .then((res) => {
@@ -176,7 +176,7 @@
     <section class="fetchedMeetups">
         {#each filteredMeetups as meetup (meetup.id)}
             <div transition:scale={{ duration: 800 }} animate:flip={{ duration: 800 }}>
-                <MeetupItem {meetup} on:show-detail on:edit-meetup />
+                <MeetupItem {meetup} on:edit-meetup={editMeetup} />
             </div>
         {/each}
     </section>
