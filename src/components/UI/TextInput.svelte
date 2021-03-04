@@ -1,6 +1,6 @@
 <script>
-    import type { IMeetup } from './../modals';
-    import { EInputType } from './../enums/meetup';
+    import type { IMeetup } from '../../modals';
+    import { EInputType } from '../../enums/meetup';
 
     export let textInput: IMeetup.ITextInput = {
         id: '',

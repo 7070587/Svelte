@@ -1,6 +1,6 @@
 <script>
     import { createEventDispatcher } from 'svelte';
-    import { ESelectMeetup } from './../enums/meetup';
+    import { ESelectMeetup } from '../../enums/meetup';
 
     const dispatch: (name: string, detail?: any) => void = createEventDispatcher();
 

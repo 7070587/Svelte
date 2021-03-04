@@ -1,9 +1,9 @@
 <script>
     import { createEventDispatcher } from 'svelte';
 
-    import meetups from './../stores/meetup';
+    import meetups from '../../stores/meetup';
 
-    import type { IMeetup } from './../modals';
+    import type { IMeetup } from '../../modals';
 
     import Button from './../UI/Button.svelte';
     import Badge from './../UI/Badge.svelte';
@@ -16,7 +16,7 @@
     let isLoading: boolean = false;
 
     let buttonALink: IMeetup.IButton = {
-        href: `mailto:${meetup.contactEmail}`,
+        href: `${meetup.id}`,
     };
 
     let buttonFavorite: IMeetup.IButton = {
@@ -89,7 +89,7 @@
             </Button>
         {/if}
 
-        <Button on:click={showDetail}>Show Detail</Button>
+        <Button button={buttonALink} on:click={showDetail}>Show Detail</Button>
     </footer>
 </article>
 

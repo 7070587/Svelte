@@ -1,10 +1,10 @@
 <script>
     import { createEventDispatcher } from 'svelte';
-    import meetups from './../stores/meetup';
+    import meetups from '../../stores/meetup';
 
-    import type { IMeetup } from './../modals';
-    import { EInputType } from './../enums/meetup';
-    import { ServiceValidation, ServiceGenerate } from './../helper';
+    import type { IMeetup } from '../../modals';
+    import { EInputType } from '../../enums/meetup';
+    import { ServiceValidation, ServiceGenerate } from '../../helper';
 
     import TextInput from './../UI/TextInput.svelte';
     import Button from './../UI/Button.svelte';

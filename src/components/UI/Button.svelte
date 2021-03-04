@@ -1,6 +1,6 @@
 <script>
-    import type { IMeetup } from './../modals';
-    import { EButtonType } from './../enums/meetup';
+    import type { IMeetup } from '../../modals';
+    import { EButtonType } from '../../enums/meetup';
 
     export let button: IMeetup.IButton = {
         type: EButtonType.button,
